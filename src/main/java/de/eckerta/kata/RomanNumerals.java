@@ -1,47 +1,37 @@
 package de.eckerta.kata;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RomanNumerals {
-    private static final Number[] numbers = new Number[] {
-            new Number(1, "I"),
-            new Number(4, "IV"),
-            new Number(5, "V"),
-            new Number(9, "IX"),
-            new Number(10, "X"),
-            new Number(40, "XL"),
-            new Number(50, "L"),
-            new Number(90, "XC"),
-            new Number(100, "C"),
-            new Number(400, "CD"),
-            new Number(500, "D"),
-            new Number(900, "CM"),
-            new Number(1000, "M"),
-    };
-
     public static String translate(int number) {
-        Number n = findLargestNotLargerThan(number);
-        if (n != null) {
-            return n.letters + translate(number - n.value);
-        } else {
+        return translateLarge(number, "IVXXLCCDM");
+    }
+
+
+
+    @NotNull
+    private static String translateLarge(int number, String letters) {
+        if (number == 0)
             return "";
-        }
+
+        String prefix = translateLarge(number / 10, letters.substring(3));
+        return prefix + translateSingleDigit(number % 10, letters);
     }
 
-    public static Number findLargestNotLargerThan(int number) {
-        Number result = null;
-        for (Number n : numbers) {
-            if (n.value <= number)
-                result  = n;
-        }
-        return result;
-    }
+    @NotNull
+    private static String translateSingleDigit(int number, String letters) {
+        if (number == 0)
+            return "";
 
-    private static class Number {
-        final int value;
-        final String letters;
+        if (number == 4)
+            return letters.substring(0, 2);
 
-        public Number(int value, String letters) {
-            this.value = value;
-            this.letters = letters;
-        }
+        if (number == 9)
+            return letters.substring(0, 1) + letters.substring(2,3);
+
+        if (number >= 5)
+            return letters.substring(1,2) + translateLarge(number - 5, letters);
+
+        return letters.substring(0, 1) + translateLarge(number - 1, letters);
     }
 }
