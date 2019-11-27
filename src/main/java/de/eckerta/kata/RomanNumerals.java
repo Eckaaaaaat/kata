@@ -4,6 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class RomanNumerals {
     public static String translate(int number) {
+        if (number >= 1000)
+            return "M" + translate(number - 1000);
+
         return translateLarge(number, "IVXXLCCDM");
     }
 
