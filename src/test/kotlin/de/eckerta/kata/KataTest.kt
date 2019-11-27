@@ -8,7 +8,7 @@ object KataTest : Spek({
     describe("Kata") {
 
         val input = listOf(
-            Triple(1, 1, 2)
+            Triple(1, 1, 3)
         )
 
         for ((left, right, sum) in input) {
