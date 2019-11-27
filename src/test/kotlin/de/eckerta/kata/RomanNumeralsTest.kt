@@ -5,9 +5,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
 object RomanNumeralsTest : Spek({
-    describe("Kata") {
-
-        val input = listOf(
+    val input = listOf(
             Pair(0, "")
             , Pair(1, "I")
             , Pair(2, "II")
@@ -32,11 +30,20 @@ object RomanNumeralsTest : Spek({
             , Pair(2000, "MM")
             , Pair(999, "CMXCIX")
             , Pair(3132, "MMMCXXXII")
-        )
+    )
 
+    describe("Java Roman Numerals") {
         for ((number, roman) in input) {
             it ("$number should be $roman") {
                 RomanNumerals.translate(number) `should be equal to` roman
+            }
+        }
+    }
+
+    describe("Kotlin Roman Numerals") {
+        for ((number, roman) in input) {
+            it ("$number should be $roman") {
+                translate(number) `should be equal to` roman
             }
         }
     }
